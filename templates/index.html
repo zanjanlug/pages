@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+<section class="hero-logo-section">
+    <img src="/static/images/zanjanlug_logo_square.svg" alt="لوگوی بزرگ زنجان‌لاگ" class="hero-logo">
+</section>
+
 <section class="next-event-section">
     {% if main_event %}
         {% if main_event.status == 'upcoming' %}

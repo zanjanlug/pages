@@ -27,24 +27,28 @@
 
         <footer>
             <div class="footer-container">
+                
+                <!-- START OF MODIFICATION: Footer Logo Block -->
+                {% block footer_logo %}
+                <div class="footer-logo">
+                    <a href="/"><img src="/static/images/zanjanlug_logo_square.svg" alt="لوگوی زنجان‌لاگ"></a>
+                </div>
+                {% endblock %}
+                <!-- END OF MODIFICATION -->
+
                 <p>ساخته شده با پایتون و عشق ❤️ در زنجان</p>
 
-                {# --- START OF MODIFICATION --- #}
-                {# Add social media links section #}
-                {% if site.social_links %} {# Check if social links exist #}
+                {% if site.social_links %}
                 <div class="social-links">
                     {% for link in site.social_links %}
                     <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer">
-                        {{ link.name }} {# You can put icons here later #}
+                        {{ link.name }}
                     </a>
                     {% endfor %}
                 </div>
                 {% endif %}
-                {# --- END OF MODIFICATION --- #}
-
             </div>
         </footer>
-        <!-- START OF MODIFICATION: Lightbox and Script -->
 
         <!-- The Lightbox HTML structure -->
         <div id="myLightbox" class="lightbox">

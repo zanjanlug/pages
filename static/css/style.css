@@ -315,3 +315,32 @@ dd a {
     color: var(--primary-color); /* Change color on hover */
     text-decoration: none; /* Ensure no underline on hover */
 }
+
+/* --- Hero Logo (Homepage) --- */
+.hero-logo-section {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-top: 20px;
+}
+
+.hero-logo {
+    max-width: 150px; /* اندازه لوگوی بزرگ را اینجا تنظیم کنید */
+    height: auto;
+}
+
+/* --- Footer Logo (Other pages) --- */
+.footer-logo {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.footer-logo img {
+    height: 50px; /* اندازه لوگوی کوچک را اینجا تنظیم کنید */
+    width: auto;
+    opacity: 0.7; /* کمی شفافیت برای ظرافت بیشتر */
+    transition: opacity 0.3s ease;
+}
+
+.footer-logo img:hover {
+    opacity: 1; /* حذف شفافیت هنگام هاور */
+}
