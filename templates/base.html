@@ -3,7 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- این بلاک عنوان به شما اجازه می‌دهد عنوان هر صفحه را به صورت جداگانه تنظیم کنید -->
         <title>{% block title %}{{ site.site_title }}{% endblock %}</title>
+        <!-- مسیر فایل CSS شما صحیح است، من آن را حفظ می‌کنم -->
         <link rel="stylesheet" href="/static/css/style.css" />
     </head>
     <body>
@@ -26,5 +28,18 @@
                 <p>ساخته شده با پایتون و عشق ❤️ در زنجان</p>
             </div>
         </footer>
+
+        <!-- START OF MODIFICATION: Lightbox and Script -->
+
+        <!-- The Lightbox HTML structure -->
+        <div id="myLightbox" class="lightbox">
+            <span class="lightbox-close">×</span>
+            <img class="lightbox-content" id="lightboxImage" />
+        </div>
+
+        <!-- Link to the JavaScript file -->
+        <script src="/static/js/script.js"></script>
+
+        <!-- END OF MODIFICATION -->
     </body>
 </html>

@@ -8,7 +8,7 @@ endblock %} {% block content %}
             {{ item.title or item.name }}
         </a>
         {% if item.date %}
-        <span class="date"> - {{ item.date }}</span>
+        <span class="date"> - {{ item.date | jalali }}</span>
         {% endif %}
     </li>
     {% else %}
