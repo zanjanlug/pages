@@ -9,6 +9,7 @@ CONTENT_PATH = 'content'
 TEMPLATE_PATH = 'templates'
 OUTPUT_PATH = 'output'
 STATIC_PATH = 'static'
+RESOURCES_PATH = 'content/resources'
 
 # --- Helper Functions ---
 
@@ -25,6 +26,14 @@ def copy_static_files():
     if os.path.exists(STATIC_PATH):
         shutil.copytree(STATIC_PATH, static_output_path)
         print("✅ Static files copied.")
+
+def copy_resource_files():
+    """Copies resource files (images, etc) to the output directory."""
+    static_output_path = os.path.join(OUTPUT_PATH, 'resources')
+    if os.path.exists(RESOURCES_PATH):
+        shutil.copytree(RESOURCES_PATH, static_output_path)
+        print("✅ Static files copied.")
+
 
 def load_content(content_type):
     """Loads and parses all markdown files from a specific content directory."""
@@ -163,6 +172,7 @@ def main():
 
     # 4. Copy static files
     copy_static_files()
+    copy_resource_files()
 
     print("🎉 Site generation complete! Check the 'output' directory.")
 
