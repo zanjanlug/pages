@@ -182,3 +182,79 @@ dd a {
 .item-list li:last-child {
     border-bottom: none;
 }
+
+/* --- Image & Lightbox Styles --- */
+
+/* Style for images within the content to give them a frame */
+.detail-page img,
+.page img {
+    max-width: 100%; /* Prevents image from overflowing its container */
+    height: auto; /* Maintains aspect ratio */
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+    cursor: pointer; /* Indicates the image is clickable */
+    transition: transform 0.2s ease-in-out;
+}
+
+.detail-page img:hover,
+.page img:hover {
+    transform: scale(1.02); /* Slight zoom effect on hover */
+}
+
+/* The Modal (background) */
+.lightbox {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    padding-top: 60px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (the image) */
+.lightbox-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90vh;
+}
+
+/* Close Button */
+.lightbox-close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.lightbox-close:hover,
+.lightbox-close:focus {
+    color: #bbb;
+    text-decoration: none;
+}
+
+/* Animation */
+.lightbox-content {
+    animation-name: zoom;
+    animation-duration: 0.4s;
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0.1);
+    }
+    to {
+        transform: scale(1);
+    }
+}
