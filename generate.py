@@ -151,6 +151,11 @@ def render_site(env, data):
 
     # --- 2. Render List Pages (Events, People, Projects) ---
     list_template = env.get_template('list_page.html')
+    content_type_persian = {
+        'events': 'رویدادها',
+        'people': 'افراد',
+        'projects': 'پروژه‌ها',
+    }
     for content_type, items in data.items():
         if content_type in ['events', 'people', 'projects']:
             output_dir = os.path.join(OUTPUT_PATH, content_type)
@@ -158,7 +163,7 @@ def render_site(env, data):
             with open(os.path.join(output_dir, 'index.html'), 'w', encoding='utf-8') as f:
                 f.write(list_template.render(
                     items=items,
-                    title=f"فهرست {content_type}",
+                    title=f"فهرست {content_type_persian[content_type]}",
                     content_type=content_type,
                     site=data
                 ))
