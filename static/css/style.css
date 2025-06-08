@@ -344,3 +344,7 @@ dd a {
 .footer-logo img:hover {
     opacity: 1; /* حذف شفافیت هنگام هاور */
 }
+/* در فایل style.css */
+.status-held { color: #6c757d; }      /* خاکستری */
+.status-upcoming { color: #0d6efd; } /* آبی */
+.status-cancelled { color: #dc3545; } /* قرمز */

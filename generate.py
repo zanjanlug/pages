@@ -16,6 +16,16 @@ RESOURCES_OUT = 'resources'
 
 # --- Helper Functions ---
 
+
+def display_status_filter(status):
+    """A Jinja2 filter to convert status slugs to readable Persian text."""
+    status_map = {
+        'held': 'برگزار شده',
+        'upcoming': 'در پیش رو',
+        'cancelled': 'لغو شده'
+    }
+    return status_map.get(status, status) # اگر وضعیت نبود، خودش را برگردان
+
 def to_jalali_filter(gregorian_date):
     """A Jinja2 filter to convert Gregorian datetime object to a Jalali date string."""
 
@@ -218,6 +228,7 @@ def main():
     clean_and_create_output_dir()
     env = Environment(loader=FileSystemLoader(TEMPLATE_PATH))
     env.filters['jalali'] = to_jalali_filter  # <--- این خط را اضافه کنید
+    env.filters['display_status'] = display_status_filter  # <-- این خط را اضافه کنید
 
     # 2. Load all content
     # ... بقیه کد بدون تغییر ...    # 2. Load all content

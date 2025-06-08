@@ -3,8 +3,10 @@
 <article class="detail-page">
     <h2>{{ item.title }}</h2>
     <p>
-        <strong>تاریخ:</strong> {{ item.date | jalali}} | <strong>وضعیت:</strong> {{
-        item.status }}
+        <strong>تاریخ:</strong> {{ item.date_obj | jalali }} | <strong>وضعیت:</strong>
+        <span class="status-{{ item.status }}">
+            {{ item.status | display_status }}
+        </span>
     </p>
 
     {% if item.presenter_details %}
