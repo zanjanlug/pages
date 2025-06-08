@@ -3,6 +3,7 @@ import shutil
 from datetime import datetime
 import markdown
 from jinja2 import Environment, FileSystemLoader
+import re
 
 # --- Configuration ---
 CONTENT_PATH = 'content'
@@ -10,6 +11,7 @@ TEMPLATE_PATH = 'templates'
 OUTPUT_PATH = 'output'
 STATIC_PATH = 'static'
 RESOURCES_PATH = 'content/resources'
+RESOURCES_OUT = 'resources'
 
 # --- Helper Functions ---
 
@@ -34,7 +36,6 @@ def copy_resource_files():
         shutil.copytree(RESOURCES_PATH, static_output_path)
         print("✅ Static files copied.")
 
-
 def load_content(content_type):
     """Loads and parses all markdown files from a specific content directory."""
     items = []
@@ -50,6 +51,26 @@ def load_content(content_type):
             filepath = os.path.join(path, filename)
             with open(filepath, 'r', encoding='utf-8') as f:
                 text = f.read()
+
+                # --- START OF MODIFICATION ---
+                # Use regex to prepend /resources/ to relative image paths.
+                # This handles both Markdown `![alt](image.jpg)` and HTML `<img src="image.jpg">`.
+                # It avoids changing absolute URLs (http://, https://, /).
+                
+                # For Markdown links: ![...](...)
+                text = re.sub(
+                    r'!\[(.*?)\]\((?!https?://|/)(.*?)\)',
+                    rf'![\1](/{RESOURCES_OUT}/\2)',
+                    text
+                )
+                # For HTML links: <img src="..." >
+                text = re.sub(
+                    r'<img(.*?)src="(?!https?://|/)(.*?)"',
+                    r'<img\1src="/resources/\2"',
+                    text
+                )
+                # --- END OF MODIFICATION ---
+
                 html = md.convert(text)
 
                 # Clean up metadata
@@ -77,7 +98,6 @@ def load_content(content_type):
 
     print(f"📚 Loaded {len(items)} items from '{content_type}'.")
     return items
-
 def find_main_page_event(events):
     """Finds the next upcoming event, or the last held one."""
     now = datetime.now()
