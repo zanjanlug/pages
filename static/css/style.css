@@ -258,3 +258,21 @@ dd a {
         transform: scale(1);
     }
 }
+/* --- Styles for new sections on homepage --- */
+
+/* Add a separator and space for the event's full description */
+.event-description {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+    text-align: right; /* Ensure content is right-aligned */
+}
+.event-description p {
+    margin-top: 0;
+}
+
+/* Center the 'All Events' button and add space above it */
+.all-events-link {
+    text-align: center;
+    margin-top: 30px;
+}

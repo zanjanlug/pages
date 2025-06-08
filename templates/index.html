@@ -1,47 +1,60 @@
-{% extends "base.html" %} {# ما به base.html جدید هم نیاز داریم تا ساختار هدر و
-فوتر را بهتر مدیریت کنیم #} {# بنابراین، base.html را هم به‌روز می‌کنیم #} {%
-block content %}
+{% extends "base.html" %}
+
+{% block content %}
 <section class="next-event-section">
-    {% if main_event %} {% if main_event.status == 'upcoming' %}
-    <h2>جلسهٔ آینده زنجان‌لاگ</h2>
+    {% if main_event %}
+        {% if main_event.status == 'upcoming' %}
+            <h2>جلسهٔ آینده زنجان‌لاگ</h2>
+        {% else %}
+            <h2>آخرین جلسهٔ برگزار شده</h2>
+        {% endif %}
+
+        <div class="event-details-box">
+            <h3>{{ main_event.title }}</h3>
+
+            <dl>
+                <dt>تاریخ:</dt>
+                <dd>{{ main_event.date }}</dd>
+
+                {% if main_event.time %}
+                <dt>زمان:</dt>
+                <dd>{{ main_event.time }}</dd>
+                {% endif %}
+
+                {% if main_event.location %}
+                <dt>مکان:</dt>
+                <dd>{{ main_event.location }}</dd>
+                {% endif %}
+
+                {% if main_event.presenter_details %}
+                <dt>ارائه‌دهنده:</dt>
+                <dd>
+                    {% for p in main_event.presenter_details %}
+                        <a href="/people/{{ p.slug }}.html">{{ p.name }}</a>{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </dd>
+                {% endif %}
+            </dl>
+
+            <!-- بخش اضافه شده: نمایش محتوای کامل رویداد -->
+            <div class="event-description">
+                {{ main_event.html | safe }}
+            </div>
+            <!-- پایان بخش اضافه شده -->
+
+            <a href="/events/{{ main_event.slug }}.html" class="btn">جزئیات بیشتر و ثبت‌نام</a>
+        </div>
+
+        <!-- بخش اضافه شده: دکمه برای لینک به صفحه همه رویدادها -->
+        <div class="all-events-link">
+             <a href="/events/" class="btn">مشاهدهٔ همهٔ رویدادها</a>
+        </div>
+        <!-- پایان بخش اضافه شده -->
+
+
     {% else %}
-    <h2>آخرین جلسهٔ برگزار شده</h2>
-    {% endif %}
-
-    <div class="event-details-box">
-        <h3>{{ main_event.title }}</h3>
-
-        <dl>
-            <dt>تاریخ:</dt>
-            <dd>{{ main_event.date }}</dd>
-
-            {% if main_event.time %}
-            <dt>زمان:</dt>
-            <dd>{{ main_event.time }}</dd>
-            {% endif %} {% if main_event.location %}
-            <dt>مکان:</dt>
-            <dd>{{ main_event.location }}</dd>
-            {% endif %} {% if main_event.presenter_details %}
-            <dt>ارائه‌دهنده:</dt>
-            <dd>
-                {% for p in main_event.presenter_details %}
-                <a href="/people/{{ p.slug }}.html">{{ p.name }}</a>{% if not
-                loop.last %}, {% endif %} {% endfor %}
-            </dd>
-            {% endif %}
-        </dl>
-
-        <a href="/events/{{ main_event.slug }}.html" class="btn"
-            >جزئیات بیشتر و ثبت‌نام</a
-        >
-    </div>
-
-    {% else %}
-    <h2>به سایت زنجان‌لاگ خوش آمدید!</h2>
-    <p>
-        در حال حاضر رویداد فعالی وجود ندارد. برنامه‌های جدید به زودی اعلام
-        خواهند شد.
-    </p>
+        <h2>به سایت زنجان‌لاگ خوش آمدید!</h2>
+        <p>در حال حاضر رویداد فعالی وجود ندارد. برنامه‌های جدید به زودی اعلام خواهند شد.</p>
     {% endif %}
 </section>
 {% endblock %}
