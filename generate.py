@@ -165,15 +165,30 @@ def render_site(env, data):
 
     # --- 3. Render Detail Pages ---
     # Event details
+
+      
+    # در تابع render_site
+
+    # Event details
     event_template = env.get_template('event_detail.html')
     for event in data['events']:
+        # --- START OF MODIFICATION ---
         # Link presenters' data to the event
         if 'presenters' in event:
-            event['presenter_details'] = [people_map.get(p_slug) for p_slug in event['presenters'] if p_slug in people_map]
+            presenters_data = event['presenters']
+            
+            # مطمئن می‌شویم که همیشه یک لیست از اسلاگ‌ها داریم، حتی اگر فقط یک ارائه‌دهنده وجود داشته باشد
+            if isinstance(presenters_data, str):
+                presenter_slugs = [presenters_data]  # اگر رشته بود، آن را به لیست تک عضوی تبدیل کن
+            else:
+                presenter_slugs = presenters_data  # در غیر این صورت، همان لیست است
+
+            # حالا با لیست یکپارچه شده، اطلاعات کامل را استخراج می‌کنیم
+            event['presenter_details'] = [people_map.get(p_slug) for p_slug in presenter_slugs if p_slug in people_map and people_map.get(p_slug) is not None]
+        # --- END OF MODIFICATION ---
 
         with open(os.path.join(OUTPUT_PATH, 'events', f"{event['slug']}.html"), 'w', encoding='utf-8') as f:
             f.write(event_template.render(item=event, site=data))
-
     # Person details
     person_template = env.get_template('person_detail.html')
     for person in data['people']:
