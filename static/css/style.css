@@ -1,5 +1,5 @@
-/* --- Import Google Font (Vazirmatn) --- */
-@import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap");
+/* --- Import Google Font (Sahel) --- */
+@import url("https://fonts.googleapis.com/css2?family=Sahel:wght@400;700&display=swap");
 
 /* --- CSS Variables for easy themeing --- */
 :root {
@@ -16,7 +16,7 @@
 body {
     direction: rtl;
     font-family:
-        "Vazirmatn",
+        "Sahel",
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
@@ -275,4 +275,43 @@ dd a {
 .all-events-link {
     text-align: center;
     margin-top: 30px;
+}
+
+/* --- Header Logo Styles --- */
+.logo-container {
+    display: flex; /* Aligns logo and text side-by-side */
+    align-items: center; /* Vertically centers the logo and text */
+    gap: 12px; /* Adds space between the logo and the site title */
+    text-decoration: none; /* Removes underline from the link */
+}
+
+.logo-container img {
+    height: 40px; /* Adjust this value to change logo size */
+    width: auto; /* Maintains aspect ratio */
+}
+
+.logo-container h1 {
+    color: var(--light-text);
+    font-size: 1.5rem; /* Same as before */
+    margin: 0; /* Same as before */
+}
+
+/* --- Footer Social Links --- */
+.social-links {
+    margin-top: 15px; /* Add space above the links */
+    display: flex; /* Arrange links horizontally */
+    justify-content: center; /* Center the links if the footer content is centered */
+    gap: 15px; /* Add space between links */
+}
+
+.social-links a {
+    color: var(--light-text); /* Link color same as footer text */
+    text-decoration: none; /* Remove underline */
+    font-weight: bold; /* Make link text bold */
+    transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.social-links a:hover {
+    color: var(--primary-color); /* Change color on hover */
+    text-decoration: none; /* Ensure no underline on hover */
 }

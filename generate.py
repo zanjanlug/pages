@@ -207,7 +207,15 @@ def main():
         'projects': load_content('projects'),
         'pages': load_content('pages'),
         # You can add global site variables here
-        'site_title': "زنجان‌لاگ"
+        'site_title': "زنجان‌لاگ",
+                # Add social media links
+        'social_links': [
+            {'name': 'تلگرام', 'url': 'https://t.me/zanjan_lug'},
+            {'name': 'وبسایت', 'url': 'https://zanjanlug.ir'},
+            # Add other links as needed
+            # {'name': 'لینکدین', 'url': 'https://linkedin.com/yourusername'},
+            # {'name': 'گیت‌هاب', 'url': 'https://github.com/yourusername'},
+        ]
     }
 
     # 3. Render all pages

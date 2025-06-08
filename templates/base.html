@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!-- این بلاک عنوان به شما اجازه می‌دهد عنوان هر صفحه را به صورت جداگانه تنظیم کنید -->
         <title>{% block title %}{{ site.site_title }}{% endblock %}</title>
+        <link rel="icon" type="image/png" href="/static/images/zanjanlug_favicon.png">
         <!-- مسیر فایل CSS شما صحیح است، من آن را حفظ می‌کنم -->
         <link rel="stylesheet" href="/static/css/style.css" />
     </head>
@@ -23,12 +24,26 @@
 
         <main>{% block content %}{% endblock %}</main>
 
+
         <footer>
             <div class="footer-container">
                 <p>ساخته شده با پایتون و عشق ❤️ در زنجان</p>
+
+                {# --- START OF MODIFICATION --- #}
+                {# Add social media links section #}
+                {% if site.social_links %} {# Check if social links exist #}
+                <div class="social-links">
+                    {% for link in site.social_links %}
+                    <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer">
+                        {{ link.name }} {# You can put icons here later #}
+                    </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {# --- END OF MODIFICATION --- #}
+
             </div>
         </footer>
-
         <!-- START OF MODIFICATION: Lightbox and Script -->
 
         <!-- The Lightbox HTML structure -->
