@@ -34,7 +34,7 @@ def to_jalali_filter(gregorian_date):
         "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور",
         "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"
     ]
-    
+
     try:
         datetime_object = datetime.fromisoformat(gregorian_date)
         jalali_date = jdatetime.date.fromgregorian(date=datetime_object)
@@ -87,7 +87,7 @@ def load_content(content_type):
                 # Use regex to prepend /resources/ to relative image paths.
                 # This handles both Markdown `![alt](image.jpg)` and HTML `<img src="image.jpg">`.
                 # It avoids changing absolute URLs (http://, https://, /).
-                
+
                 # For Markdown links: ![...](...)
                 text = re.sub(
                     r'!\[(.*?)\]\((?!https?://|/)(.*?)\)',
@@ -181,7 +181,7 @@ def render_site(env, data):
     # --- 3. Render Detail Pages ---
     # Event details
 
-      
+
     # در تابع render_site
 
     # Event details
@@ -191,7 +191,7 @@ def render_site(env, data):
         # Link presenters' data to the event
         if 'presenters' in event:
             presenters_data = event['presenters']
-            
+
             # مطمئن می‌شویم که همیشه یک لیست از اسلاگ‌ها داریم، حتی اگر فقط یک ارائه‌دهنده وجود داشته باشد
             if isinstance(presenters_data, str):
                 presenter_slugs = [presenters_data]  # اگر رشته بود، آن را به لیست تک عضوی تبدیل کن
@@ -242,6 +242,7 @@ def main():
                 # Add social media links
         'social_links': [
             {'name': 'تلگرام', 'url': 'https://t.me/zanjan_lug'},
+            {'name': 'ماستودون', 'url': 'https://ohai.social/@zanjanlug'},
             {'name': 'وبسایت', 'url': 'https://zanjanlug.ir'},
             # Add other links as needed
             # {'name': 'لینکدین', 'url': 'https://linkedin.com/yourusername'},
