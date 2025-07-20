@@ -1,6 +1,6 @@
 ---
 title: مولد سایت استاتیک زنجانلاگ
-github: <a href="https://github.com/zanjanlug/pages-template" rel="noreferrer noopener nofollow">github.com/zanjanlug/pages-template</a>
+github: <a href="https://github.com/zanjanlug/pages-template" rel="noreferrer noopener nofollow"></a>
 
 ---
 
