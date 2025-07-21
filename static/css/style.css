@@ -118,6 +118,13 @@ main {
     color: var(--primary-color);
 }
 
+.event-details-box img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+}
+
 dl {
     margin: 25px 0;
 }
@@ -345,6 +352,12 @@ dd a {
     opacity: 1; /* حذف شفافیت هنگام هاور */
 }
 /* در فایل style.css */
-.status-held { color: #6c757d; }      /* خاکستری */
-.status-upcoming { color: #0d6efd; } /* آبی */
-.status-cancelled { color: #dc3545; } /* قرمز */
+.status-held {
+    color: #6c757d;
+} /* خاکستری */
+.status-upcoming {
+    color: #0d6efd;
+} /* آبی */
+.status-cancelled {
+    color: #dc3545;
+} /* قرمز */
