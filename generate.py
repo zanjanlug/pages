@@ -83,47 +83,35 @@ def load_content(content_type):
             with open(filepath, 'r', encoding='utf-8') as f:
                 text = f.read()
 
-                # --- START OF MODIFICATION ---
                 # Use regex to prepend /resources/ to relative image paths.
-                # This handles both Markdown `![alt](image.jpg)` and HTML `<img src="image.jpg">`.
-                # It avoids changing absolute URLs (http://, https://, /).
-
-                # For Markdown links: ![...](...)
                 text = re.sub(
                     r'!\[(.*?)\]\((?!https?://|/)(.*?)\)',
                     rf'![\1](/{RESOURCES_OUT}/\2)',
                     text
                 )
-                # For HTML links: <img src="..." >
                 text = re.sub(
                     r'<img(.*?)src="(?!https?://|/)(.*?)"',
                     r'<img\1src="/resources/\2"',
                     text
                 )
-                # --- END OF MODIFICATION ---
 
                 html = md.convert(text)
-
-                # Clean up metadata
                 meta = {k: v[0] if len(v) == 1 else v for k, v in md.Meta.items()}
-
                 item = {
                     'html': html,
                     'slug': os.path.splitext(filename)[0],
                     **meta
                 }
 
-                # Convert date strings to datetime objects for events
                 if content_type == 'events' and 'date' in item:
                     try:
                         item['date_obj'] = datetime.strptime(item['date'], '%Y-%m-%d')
                     except ValueError:
                         print(f"⚠️ Warning: Invalid date format in {filename}. Use YYYY-MM-DD.")
-                        item['date_obj'] = datetime.now() # Fallback
+                        item['date_obj'] = datetime.now()
 
                 items.append(item)
 
-    # Sort events by date (newest first)
     if content_type == 'events':
         items.sort(key=lambda x: x.get('date_obj', datetime.min), reverse=True)
 
@@ -135,36 +123,52 @@ def find_main_page_event(events):
     upcoming_events = [e for e in events if e.get('status') == 'upcoming' and e.get('date_obj') > now]
 
     if upcoming_events:
-        # Return the closest upcoming event
         return min(upcoming_events, key=lambda x: x['date_obj'])
     elif events:
-        # Return the most recent past event
         return events[0]
     return None
 
+# --- START OF MODIFICATION ---
+def get_full_url(base_url, path):
+    """Constructs a full URL from a base and a path."""
+    return f"{base_url.rstrip('/')}/{path.lstrip('/')}"
+
 def render_site(env, data):
-    """Renders all HTML pages."""
+    """Renders all HTML pages with OG data."""
     people_map = {p['slug']: p for p in data['people']}
+    base_url = data['site_config']['base_url']
 
     # --- 1. Render Main Pages (Index, About, etc.) ---
-    # Index page
     main_event = find_main_page_event(data['events'])
+    index_og_data = {
+        'title': data['site_config']['title'],
+        'description': data['site_config']['description'],
+        'url': base_url,
+        'image': get_full_url(base_url, data['site_config']['og_image']),
+        'type': 'website'
+    }
     template = env.get_template('index.html')
     with open(os.path.join(OUTPUT_PATH, 'index.html'), 'w', encoding='utf-8') as f:
-        f.write(template.render(main_event=main_event, site=data))
+        f.write(template.render(main_event=main_event, site=data, og_data=index_og_data))
 
-    # Static pages (e.g., about)
-    template = env.get_template('page_detail.html') # A generic template for pages
+    template = env.get_template('page_detail.html')
     for page in data['pages']:
+        page_url = get_full_url(base_url, f"{page['slug']}.html")
+        page_og_image = get_full_url(base_url, page.get('image', data['site_config']['og_image']))
+        page_og_data = {
+            'title': f"{page.get('title', 'صفحه')} | {data['site_config']['title']}",
+            'description': page.get('summary', data['site_config']['description']),
+            'url': page_url,
+            'image': page_og_image,
+            'type': 'website'
+        }
         with open(os.path.join(OUTPUT_PATH, f"{page['slug']}.html"), 'w', encoding='utf-8') as f:
-            f.write(template.render(page=page, site=data))
+            f.write(template.render(page=page, site=data, og_data=page_og_data))
 
-    # --- 2. Render List Pages (Events, People, Projects) ---
+    # --- 2. Render List Pages (Not generating specific OG for these for now) ---
     list_template = env.get_template('list_page.html')
     content_type_persian = {
-        'events': 'رویدادها',
-        'people': 'افراد',
-        'projects': 'پروژه‌ها',
+        'events': 'رویدادها', 'people': 'افراد', 'projects': 'پروژه‌ها',
     }
     for content_type, items in data.items():
         if content_type in ['events', 'people', 'projects']:
@@ -179,45 +183,38 @@ def render_site(env, data):
                 ))
 
     # --- 3. Render Detail Pages ---
-    # Event details
+    detail_templates = {
+        'events': env.get_template('event_detail.html'),
+        'people': env.get_template('person_detail.html'),
+        'projects': env.get_template('project_detail.html')
+    }
+
+    for content_type, items in data.items():
+      if content_type in detail_templates:
+        template = detail_templates[content_type]
+        for item in items:
+            # Link presenters for events
+            item_og_image = get_full_url(base_url, item.get('image', data['site_config']['og_image']))
+
+            if content_type == 'events' and 'presenters' in item:
+                presenter_slugs = item['presenters'] if isinstance(item['presenters'], list) else [item['presenters']]
+                item['presenter_details'] = [people_map.get(p_slug) for p_slug in presenter_slugs if p_slug in people_map and people_map.get(p_slug) is not None]
 
 
-    # در تابع render_site
-
-    # Event details
-    event_template = env.get_template('event_detail.html')
-    for event in data['events']:
-        # --- START OF MODIFICATION ---
-        # Link presenters' data to the event
-        if 'presenters' in event:
-            presenters_data = event['presenters']
-
-            # مطمئن می‌شویم که همیشه یک لیست از اسلاگ‌ها داریم، حتی اگر فقط یک ارائه‌دهنده وجود داشته باشد
-            if isinstance(presenters_data, str):
-                presenter_slugs = [presenters_data]  # اگر رشته بود، آن را به لیست تک عضوی تبدیل کن
-            else:
-                presenter_slugs = presenters_data  # در غیر این صورت، همان لیست است
-
-            # حالا با لیست یکپارچه شده، اطلاعات کامل را استخراج می‌کنیم
-            event['presenter_details'] = [people_map.get(p_slug) for p_slug in presenter_slugs if p_slug in people_map and people_map.get(p_slug) is not None]
-        # --- END OF MODIFICATION ---
-
-        with open(os.path.join(OUTPUT_PATH, 'events', f"{event['slug']}.html"), 'w', encoding='utf-8') as f:
-            f.write(event_template.render(item=event, site=data))
-    # Person details
-    person_template = env.get_template('person_detail.html')
-    for person in data['people']:
-        with open(os.path.join(OUTPUT_PATH, 'people', f"{person['slug']}.html"), 'w', encoding='utf-8') as f:
-            f.write(person_template.render(item=person, site=data))
-
-    # Project details
-    project_template = env.get_template('project_detail.html')
-    for project in data['projects']:
-        with open(os.path.join(OUTPUT_PATH, 'projects', f"{project['slug']}.html"), 'w', encoding='utf-8') as f:
-            f.write(project_template.render(item=project, site=data))
+            print(item_og_image)
+            item_url = get_full_url(base_url, f"{content_type}/{item['slug']}.html")
+            item_og_data = {
+                'title': f"{item.get('title', 'مورد')} | {data['site_config']['title']}",
+                'description': item.get('summary', data['site_config']['description']),
+                'url': item_url,
+                'image': item_og_image,
+                'type': 'article'
+            }
+            with open(os.path.join(OUTPUT_PATH, content_type, f"{item['slug']}.html"), 'w', encoding='utf-8') as f:
+                f.write(template.render(item=item, site=data, og_data=item_og_data))
 
     print("✅ All pages rendered successfully.")
-
+# --- END OF MODIFICATION ---
 
 # --- Main Execution ---
 def main():
@@ -227,19 +224,21 @@ def main():
     # 1. Setup environment
     clean_and_create_output_dir()
     env = Environment(loader=FileSystemLoader(TEMPLATE_PATH))
-    env.filters['jalali'] = to_jalali_filter  # <--- این خط را اضافه کنید
-    env.filters['display_status'] = display_status_filter  # <-- این خط را اضافه کنید
+    env.filters['jalali'] = to_jalali_filter
+    env.filters['display_status'] = display_status_filter
 
     # 2. Load all content
-    # ... بقیه کد بدون تغییر ...    # 2. Load all content
     data = {
         'events': load_content('events'),
         'people': load_content('people'),
         'projects': load_content('projects'),
         'pages': load_content('pages'),
-        # You can add global site variables here
-        'site_title': "زنجان‌لاگ",
-                # Add social media links
+        'site_config': {
+            'title': "زنجان‌لاگ",
+            'base_url': 'https://zanjanlug.ir',
+            'description': 'گروه کاربران لینوکس زنجان (زنجان‌لاگ)، جامعه‌ای برای علاقه‌مندان به نرم‌افزار آزاد و متن‌باز در زنجان.',
+            'og_image': '/static/images/zanjanlug_logo_square.png'
+        },
         'social_links': [
             {'name': 'تلگرام', 'url': 'https://t.me/zanjan_lug'},
             {'name': 'ماستودون', 'url': 'https://ohai.social/@zanjanlug'},
@@ -249,6 +248,7 @@ def main():
             # {'name': 'گیت‌هاب', 'url': 'https://github.com/yourusername'},
         ]
     }
+    # --- END OF MODIFICATION ---
 
     # 3. Render all pages
     render_site(env, data)

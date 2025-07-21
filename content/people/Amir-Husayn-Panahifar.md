@@ -1,6 +1,7 @@
 ---
 name: امیرحسین پناهی‌فر
 photo: ../resources/Amir-Husayn-Panahifar.jpg
+image: /resources/Amir-Husayn-Panahifar.jpg
 bio: دلباخته دنیای صفر ؛ یک و آنچه بین آن است
 links:
   email: ahp@panahifar.ir

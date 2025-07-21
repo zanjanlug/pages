@@ -3,16 +3,59 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <!-- این بلاک عنوان به شما اجازه می‌دهد عنوان هر صفحه را به صورت جداگانه تنظیم کنید -->
-        <title>{% block title %}{{ site.site_title }}{% endblock %}</title>
-        <link rel="icon" type="image/png" href="/static/images/zanjanlug_favicon.png">
-        <!-- مسیر فایل CSS شما صحیح است، من آن را حفظ می‌کنم -->
+
+        {% if og_data is defined %} {# Use specific OG data if provided #}
+        <meta
+            property="og:title"
+            content="{{ og_data.title | default(site.site_config.title) }}"
+        />
+        <meta
+            property="og:description"
+            content="{{ og_data.description | default(site.site_config.description) }}"
+        />
+        <meta
+            property="og:image"
+            content="{{ og_data.image | default(site.site_config.base_url + site.site_config.og_image) }}"
+        />
+        <meta
+            property="og:url"
+            content="{{ og_data.url | default(site.site_config.base_url) }}"
+        />
+        <meta
+            property="og:type"
+            content="{{ og_data.type | default('website') }}"
+        />
+        {% else %} {# Fallback to general site data if og_data is not defined #}
+        <meta
+            property="og:title"
+            content="{{ title | default(site.site_config.title) }}"
+        />
+        <meta
+            property="og:description"
+            content="{{ site.site_config.description }}"
+        />
+        <meta
+            property="og:image"
+            content="{{ site.site_config.base_url + site.site_config.og_image }}"
+        />
+        <meta property="og:url" content="{{ site.site_config.base_url }}" />
+        <meta property="og:type" content="website" />
+        {% endif %}
+        <meta property="og:site_name" content="{{ site.site_config.title }}" />
+        <title>
+            {% block title %}{{ site.site_config.title }}{% endblock %}
+        </title>
+        <link
+            rel="icon"
+            type="image/png"
+            href="/static/images/zanjanlug_favicon.png"
+        />
         <link rel="stylesheet" href="/static/css/style.css" />
     </head>
     <body>
         <header>
             <div class="header-container">
-                <h1><a href="/">{{ site.site_title }}</a></h1>
+                <h1><a href="/">{{ site.site_config.title }}</a></h1>
                 <nav>
                     <a href="/events/">رویدادها</a>
                     <a href="/people/">افراد</a>
@@ -24,24 +67,28 @@
 
         <main>{% block content %}{% endblock %}</main>
 
-
         <footer>
             <div class="footer-container">
-                
-                <!-- START OF MODIFICATION: Footer Logo Block -->
                 {% block footer_logo %}
                 <div class="footer-logo">
-                    <a href="/"><img src="/static/images/zanjanlug_logo_square.svg" alt="لوگوی زنجان‌لاگ"></a>
+                    <a href="/"
+                        ><img
+                            src="/static/images/zanjanlug_logo_square.svg"
+                            alt="لوگوی زنجان‌لاگ"
+                    /></a>
                 </div>
                 {% endblock %}
-                <!-- END OF MODIFICATION -->
 
                 <p>ZanjanLUG CC-By-SA 🐈‍⬛</p>
 
                 {% if site.social_links %}
                 <div class="social-links">
                     {% for link in site.social_links %}
-                    <a href="{{ link.url }}" target="_blank" rel="noreferrer noopener nofollow">
+                    <a
+                        href="{{ link.url }}"
+                        target="_blank"
+                        rel="noreferrer noopener nofollow"
+                    >
                         {{ link.name }}
                     </a>
                     {% endfor %}
@@ -50,15 +97,11 @@
             </div>
         </footer>
 
-        <!-- The Lightbox HTML structure -->
         <div id="myLightbox" class="lightbox">
             <span class="lightbox-close">×</span>
             <img class="lightbox-content" id="lightboxImage" />
         </div>
 
-        <!-- Link to the JavaScript file -->
         <script src="/static/js/script.js"></script>
-
-        <!-- END OF MODIFICATION -->
     </body>
 </html>

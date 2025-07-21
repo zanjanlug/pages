@@ -4,6 +4,7 @@ date: 2025-06-13
 time: ساعت ۲۲:۳۰
 location: آنلاین
 status: cancelled
+image: /resources/session9_cancelled_poster.jpg
 ---
 
 
