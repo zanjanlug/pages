@@ -13,7 +13,7 @@
     <p>
         <strong>ارائه‌دهندگان:</strong>
         {% for p in item.presenter_details %}
-        <a href="/people/{{ p.slug }}.html">{{ p.name }}</a>{% if not loop.last
+        <a href="/people/{{ p.slug }}.html "rel="noreferrer noopener nofollow">{{ p.name }}</a>{% if not loop.last
         %}, {% endif %} {% endfor %}
     </p>
     {% endif %}
