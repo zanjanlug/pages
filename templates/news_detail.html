@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block title %}{{ item.title }} | {{
+site.site_config.title }}{% endblock %} {% block og_data %}
+<meta property="og:title" content="{{ og_data.title }}" />
+<meta property="og:description" content="{{ og_data.description }}" />
+<meta property="og:type" content="{{ og_data.type }}" />
+<meta property="og:url" content="{{ og_data.url }}" />
+<meta property="og:image" content="{{ og_data.image }}" />
+{% endblock %} {% block content %}
+<article class="news-detail">
+    <header>
+        <h1>{{ item.title }}</h1>
+        <p class="meta">
+            <span>منتشر شده در: {{ item.date | jalali }}</span>
+        </p>
+        {% if item.image %}
+        <img src="{{ item.image }}" alt="{{ item.title }}" class="news-image" />
+        {% endif %}
+    </header>
+    <section class="content">{{ item.html | safe }}</section>
+</article>
+{% endblock %}
