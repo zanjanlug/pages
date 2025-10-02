@@ -4,23 +4,27 @@ date: 2025-10-03
 status: upcoming
 image: C:\Users\BALUCH\Desktop\pages\content\resources\final sfd.jpg
 ---
+![عکس رویداد](final sfd.jpg)
+
 سلام بچه‌ها! 😍
 فردا جمعه ۱۱ مهر ساعت ۱۷، منتظرتون هستیم تا با انرژی خودتون این رویداد رو بدرخشونیم!
-👉 https://bbb.azad-on.com/rooms/plk-6sl-vno-hdq/join
+
+👉 [لین ورود به رویداد](https://bbb.azad-on.com/rooms/plk-6sl-vno-hdq/join)  
 
 خیلی خوشحالیم که کنارمون هستید! 🥳
 
 صفحات مجازی ما:
-🌐 وبسایت: https://zanjanlug.ir
 
-📢 تلگرام: https://t.me/zanjan_lug
+🌐 [وبسایت زنجان‌لاگ](http://zanjanlug.ir)  
 
-🐧 ماستودون: https://ohai.social/@zanjanlug
+📢 [تلگرام زنجان‌لاگ](http://t.me/zanjan_lug)
 
-📸 اینستاگرام: https://www.instagram.com/zanjanlug
+🐧 [ماستودون زنجان‌لاگ](https://ohai.social/@zanjanlug)
 
-🔗 لینکدین: https://ir.linkedin.com/in/zanjan-lug-393848387
+🎥 [پیرتیوب زنجان‌لاگ](https://gnulinux.tube/a/zanjanlug)  
 
-🎥 پیرتیوب: https://gnulinux.tube/a/zanjanlug
+📘 [فیسبوک زنجان‌لاگ](https://www.facebook.com/61581807890416/posts/122093112849060263)
 
-📘 فیسبوک: https://www.facebook.com/61581807890416/posts/122093112849060263
+🔗 [لینکدین زنجان‌لاگ](https://ir.linkedin.com/in/zanjan-lug-393848387)
+
+📸 [اینستاگرام زنجان‌لاگ](https://www.instagram.com/zanjanlug)
