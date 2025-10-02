@@ -2,9 +2,9 @@
 title: اولین دوره‌ی جشن روز آزادی نرم‌افزار زنجان‌لاگ
 date: 2025-10-03
 status: upcoming
-image: C:\Users\BALUCH\Desktop\pages\content\resources\final sfd.jpg
+image: C:\Users\BALUCH\Desktop\pages\content\resources\finalsfd.jpg
 ---
-![عکس رویداد](final sfd.jpg)
+![عکس رویداد](finalsfd.jpg)
 
 سلام بچه‌ها! 😍
 فردا جمعه ۱۱ مهر ساعت ۱۷، منتظرتون هستیم تا با انرژی خودتون این رویداد رو بدرخشونیم!
